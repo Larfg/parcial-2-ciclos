@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.eci.cvds.persistence.mybatisimpl.mappers.AuthorMapper">
+
+	<resultMap type='Author' id='AuthorResult'>
+		<id property='id' column='id' />
+		<result property='name' column='name' />
+		<result property='citizenship' column='citizenship' />
+		<result property='birthdate' column='birthdate' />
+	</resultMap>
+
+	<select id="getAuthors" resultMap="AuthorResult"
+		parameterType="int">
+		SELECT
+			a.id ,
+			a.name ,
+			a.citizenship ,
+			a.birthdate
+		FROM AUTHOR a
+		<if test="authorId != null">
+			WHERE a.id = #{authorId}
+		</if>
+	</select>
+</mapper>

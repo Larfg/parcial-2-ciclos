@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.eci.cvds.persistence.mybatisimpl.mappers.BookMapper">
+
+	<resultMap type='Book' id='BookResult'>
+		<id property='id' column='id' />
+		<result property='name' column='name' />
+		<result property='price' column='price' />
+		<result property='language' column='language' />
+		<result property='publicationdate' column='publicationdate' />
+		<result property='rating' column='rating' />
+	</resultMap>
+
+	<select id="getByAuthor" resultMap="BookResult"
+		parameterType="int">
+		SELECT
+			b.id ,
+			b.name ,
+			b.price ,
+			b.`language` ,
+			b.publicationdate ,
+			b.rating ,
+			b.format
+		FROM BOOK b
+		<if test="author != null">
+			WHERE b.author_id = #{author}
+		</if>
+	</select>
+
+</mapper>
