@@ -10,6 +10,7 @@ import edu.eci.cvds.entities.Review;
 import edu.eci.cvds.persistence.AuthorDAO;
 import edu.eci.cvds.persistence.PersistenceException;
 import edu.eci.cvds.persistence.BookDAO;
+import edu.eci.cvds.persistence.ReviewDAO;
 import edu.eci.cvds.services.ECIBookServices;
 import edu.eci.cvds.services.ServicesException;
 
@@ -23,6 +24,9 @@ public class ECIBookServicesImpl implements ECIBookServices {
 
 	@Inject
 	private BookDAO bookDAO;
+
+	@Inject
+	private ReviewDAO reviewDAO;
 
 	@Override
 	public List<Author> listarAutores() throws ServicesException {
@@ -58,7 +62,11 @@ public class ECIBookServicesImpl implements ECIBookServices {
 
 	@Override
 	public List<Review> buscarResenaPorLibro(int libroId) throws ServicesException {
-		throw new UnsupportedOperationException("Not supported yet.");
+		try {
+			return reviewDAO.buscarPorLibro(libroId);
+		} catch (PersistenceException ex) {
+			throw new ServicesException("Error en la consulta:" + ex.getLocalizedMessage(), ex);
+		}
 	}
 
 	@Override
